@@ -14,6 +14,23 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     next();
     });
+           
+
+    app.use(function(req, res, next) {
+        // Uses path.join to find the path where the file should be
+        var filePath = path.join(__dirname,"static", req.url);
+        
+        // Built-in fs.stat gets info about a file
+        fs.stat(filePath, function(err, fileInfo) {
+        if (err) {
+            res.send("The image file does not exist!");
+        next();
+        return;
+        }
+        if (fileInfo.isFile()) res.sendFile(filePath);
+        else next();
+        });
+        });
 
 // Starts the app on port 3000 and display a message when it’s started
 app.listen(3000, function() {
