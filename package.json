@@ -1,0 +1,11 @@
+{
+    "name": "static-file-fun",
+    "author": "Uzma",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "express": "^4.17.1",
+        "mongodb": "^4.3.1"
+    }
+}
