@@ -70,7 +70,16 @@ app.post('/collection/:collectionName', (req, res, next) => {
         res.send(result.modifiedCount === 1 ? {msg: 'success'} : {msg: 'error'})
         })
         })
-  
+                
+//    delete an object 
+    app.delete('/collection/:collectionName/:id', (req, res, next) => {
+    req.collection.deleteOne(
+    { _id: ObjectID(req.params.id) },(e, result) => {
+    if (e) return next(e)
+    res.send(result.deletedCount === 1 ?{msg: 'success'} : {msg: 'error'})
+    })
+    })  
+
     app.use(function(req, res, next) {
         // Uses path.join to find the path where the file should be
         var filePath = path.join(__dirname,"static", req.url);
