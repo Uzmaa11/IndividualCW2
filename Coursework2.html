@@ -32,6 +32,10 @@
         <header style="background-color:rgb(0, 0, 0);font-family:monospace;height:100px">
             <img style="height:90px;display: flex;"src="header1.png"><br>
             <img style="height:50px;display:flex;margin-left:110px;margin-top:-80px;"src="header.png">
+            <div class="search-bar">
+               <input type="text" class="search-box" v-model="search" placeholder="Search">
+               <button class="searchbtn"><i class="fa fa-search"></i></button>
+            </div>
             <button style="margin-left:980px;margin-top:-50px;visibility: hidden;height:50px;border:4px solid white;border-radius:20px;width:200px;background-color:rgb(163, 156, 154);color:rgb(0, 0, 0);" id="cartbtn" v-on:click='showCheckout'>
                 {{cartItemCount}}
                 <span class="fas fa-cart-plus"></span>    Shopping Cart
@@ -39,6 +43,28 @@
         </header>
         
         <main>
+            <div id="results" style="display:none">
+                <h2>Search results:</h2>
+                <div class="card" v-for="lessons in searchResult">
+                    <h2 style="margin-left: 30px;font-family: Brush script MT;font-size:30px;color:rgb(0, 0, 0);" v-text="lessons.topic"></h2>
+                    <figure>
+                        <img style="width: 300px;height:300px;margin-left:-20px;" v-bind:src="lessons.image">
+                    </figure>
+                    <p style="margin-left: 30px;color:rgb(0, 0, 0);">Location: {{lessons.location}}</p>
+                    <p style="margin-left: 30px;color:rgb(0, 0, 0);">Price: {{lessons.price}}</p>
+                    <p style="margin-left: 30px;color:rgb(0, 0, 0);">Available spaces: {{lessons.availableInventory -cartCount(lessons) }}</p>
+
+                    <button style="margin-left:160px;margin-bottom:20px;height:50px;width:120px;background-color:rgb(8, 8, 8);color:rgb(255, 196, 0);border:4px solid rgb(255, 196, 0);border-radius:30px;" v-on:click='addToCart(lessons)' v-if='canAddToCart(lessons)'>Add to cart</button>
+                   
+                    <span style="margin-left: 30px;margin-bottom:20px;color:red;" v-if='lessons.availableInventory === cartCount(lessons)'>All out!</span>
+                    <span style="color:blue;" v-else-if="lessons.availableInventory - cartCount(lessons) < 5">
+                        Only {{lessons.availableInventory - cartCount(lessons)}} left!
+                    </span>
+                    <span style="color:blue;" v-else>Buy now!</span>
+                
+                </div>
+
+            </div>
             <div v-if='showlesson'>
                     <div style="margin-left:370px;margin-bottom:10px;margin-top:20px;background-color:rgb(255, 55, 5);border:4px solid black;border-radius:30px;width:500px;" id="sortButtons">
                             <form style="margin-left:130px;margin-bottom:30px;color:rgb(255, 255, 255);width:500px;" >
@@ -132,6 +158,7 @@
                 sitename: 'AFTER SCHOOL ACTIVITIES',
                 lessons:[],
                 cart: [],
+                search="",
                 sortItem:{
                     sortCategory:'Subject',
                     sortOrder:'Ascending',
@@ -153,20 +180,20 @@
                                 webstore.lessons = json;
                             });
                     })
-                    // },
       
-            //  const newProduct = {name: 'gordon', phoneNumber: 7849};
-            //   // set the url to your server and route
-            //   fetch('http://localhost:3000/collection/order', {
-            //   method: 'POST', // set the HTTP method as 'POST'
-            //   headers: {'Content-Type': 'application/json', // set the data type as JSON
-            //   },
-            //   body: JSON.stringify(newProduct), // need to stringify the JSON object
-            //   })
-            //   .then(response => response.json())
-            //   .then(responseJSON => {
-            //   console.log('Success:', responseJSON);
-            //   });
+              const newProduct = {name: 'gordon', phoneNumber: 7849};
+
+              // set the url to your server and route
+              fetch('http://localhost:3000/collection/order', {
+              method: 'POST', // set the HTTP method as 'POST'
+              headers: {'Content-Type': 'application/json', // set the data type as JSON
+              },
+              body: JSON.stringify(newProduct), // need to stringify the JSON object
+              })
+              .then(response => response.json())
+              .then(responseJSON => {
+              console.log('Success:', responseJSON);
+              });
               },
 
             methods: {
@@ -286,6 +313,18 @@
                 }              
                                
             },
+
+            searchResult:function(){
+                let searchText=this.search.toLowerCase();
+                if (searchText==""){
+                    document.getElementById("results").style.display="none";
+                }
+                else
+                document.getElementById("results").style.display="block";
+                return this.lessons.filter((lessons)=>{
+                    return lessons.topic.toLowerCase().match(searchText)||lessons.location.toLowerCase().match(searchText);
+                });
+            },
         }
     });
     function checkform()
@@ -315,18 +354,18 @@ function Validate(e) {
   return isValid;
 
 }
-             const newProduct = {name: 'gordon', phoneNumber: 7849};
-              // set the url to your server and route
-              fetch('http://localhost:3000/collection/order', {
-              method: 'POST', // set the HTTP method as 'POST'
-              headers: {'Content-Type': 'application/json', // set the data type as JSON
-              },
-              body: JSON.stringify(newProduct), // need to stringify the JSON object
-              })
-              .then(response => response.json())
-              .then(responseJSON => {
-              console.log('Success:', responseJSON);
-              });
+            //  const newProduct = {name: 'gordon', phoneNumber: 7849};
+            //   // set the url to your server and route
+            //   fetch('http://localhost:3000/collection/order', {
+            //   method: 'POST', // set the HTTP method as 'POST'
+            //   headers: {'Content-Type': 'application/json', // set the data type as JSON
+            //   },
+            //   body: JSON.stringify(newProduct), // need to stringify the JSON object
+            //   })
+            //   .then(response => response.json())
+            //   .then(responseJSON => {
+            //   console.log('Success:', responseJSON);
+            //   });
 
     </script>
 </body>
