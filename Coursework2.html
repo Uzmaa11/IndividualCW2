@@ -149,8 +149,8 @@
             console.log('requesting data from server..')
 
             fetch('https://cst3145coursework.herokuapp.com/collection/lessons').then(
-                function (response) {
-                    response.json().then(
+                function (res) {
+                    res.json().then(
                         function (json) {       
                                 webstore.lessons = json;
                             });
