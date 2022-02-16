@@ -14,8 +14,33 @@ app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     next();
     });
-           
+           // connect to MongoDB
+const MongoClient = require('mongodb').MongoClient;
+let db;
+MongoClient.connect('mongodb+srv://Uzma:Uzma11@cluster0.zdoka.mongodb.net/', (err, client) => {
+    db = client.db('webstore')
+})
 
+// display a message for root path to show that API is working
+app.get('/', (req, res, next) => {
+    res.send('Select a collection, e.g., /collection/messages')
+})
+
+// get the collection name
+app.param('collectionName', (req, res, next, collectionName) => {
+    req.collection = db.collection(collectionName)
+    // console.log('collection name:', req.collection)
+    return next()
+})
+
+// retrieve all the objects from an collection
+app.get('/collection/:collectionName', (req, res, next) => {
+    req.collection.find({}).toArray((e, results) => {
+        if (e) return next(e)
+        res.send(results)
+    })
+})
+  
     app.use(function(req, res, next) {
         // Uses path.join to find the path where the file should be
         var filePath = path.join(__dirname,"static", req.url);
