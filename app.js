@@ -41,6 +41,24 @@ app.get('/collection/:collectionName', (req, res, next) => {
     })
 })
   
+//adding post
+app.post('/collection/:collectionName', (req, res, next) => {
+    req.collection.insert(req.body, (e, results) => {
+    if (e) return next(e)
+    res.send(results.ops)
+    })
+    })
+    
+    // return with object id 
+    const ObjectID = require('mongodb').ObjectID;
+    app.get('/collection/:collectionName/:id'
+    , (req, res, next) => {
+    req.collection.findOne({ _id: new ObjectID(req.params.id) }, (e, result) => {
+    if (e) return next(e)
+    res.send(result)
+    })
+    })
+         
     app.use(function(req, res, next) {
         // Uses path.join to find the path where the file should be
         var filePath = path.join(__dirname,"static", req.url);
