@@ -97,6 +97,5 @@ app.post('/collection/:collectionName', (req, res, next) => {
         });
 
 // Starts the app on port 3000 and display a message when it’s started
-
 const port = process.env.PORT || 3000
 app.listen(port)
