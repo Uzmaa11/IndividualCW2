@@ -58,7 +58,19 @@ app.post('/collection/:collectionName', (req, res, next) => {
     res.send(result)
     })
     })
-         
+        
+    //update an object 
+    app.put('/collection/:collectionName/:id', (req, res, next) => {
+        req.collection.update(
+        {_id: new ObjectID(req.params.id)},
+        {$set: req.body},
+        {safe: true, multi: false},
+        (e, result) => {
+        if (e) return next(e)
+        res.send(result.modifiedCount === 1 ? {msg: 'success'} : {msg: 'error'})
+        })
+        })
+  
     app.use(function(req, res, next) {
         // Uses path.join to find the path where the file should be
         var filePath = path.join(__dirname,"static", req.url);
