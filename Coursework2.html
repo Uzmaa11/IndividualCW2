@@ -216,7 +216,7 @@
                 method: 'PUT', // set the HTTP method as 'PUT'
                 headers: {'Content-Type': 'application/json', // set the data type as JSON
  },
-                body: JSON.stringify({availableInventory=newInventory}), // need to stringify the JSON object
+                body: JSON.stringify({availableInventory:newInventory}), // need to stringify the JSON object
                 })
                 .then(response => response.json())
                 .then(responseJSON => {
