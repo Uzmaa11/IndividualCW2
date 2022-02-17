@@ -208,26 +208,29 @@
                 .then(response => response.json())
                 .then(responseJSON => {
                 });
- 
 
-                console.log("1-"+cart.length);
-                console.log("2-"+this.cart.length);
+                for(i=0;cart.length;i++){
+                var lessonID=cart[i].id;
+                console.log(lessonID);
+                var Inventory=cart[i].availableInventory;
+                console.log(Inventory);
+                var newInventory=Inventory-1;  
+                console.log(newInventory);
 
-                // for(i=0;cart.length;i++){}
-
-                // const newInventory={oldInventory-1};
-
+                // const finalInventory={}
+                
                 // set the url to your server and route
-                fetch('https://cors-anywhere.herokuapp.com/cst3145coursework.herokuapp.com/collection/lessons', {
-                method: 'PUT', // set the HTTP method as 'POST'
-                headers: {'Content-Type': 'application/json', // set the data type as JSON
- },
-                body: JSON.stringify(newProduct), // need to stringify the JSON object
-                })
-                .then(response => response.json())
-                .then(responseJSON => {
-                });
-               
+//                 fetch('https://cors-anywhere.herokuapp.com/cst3145coursework.herokuapp.com/collection/lessons', {
+//                 method: 'PUT', // set the HTTP method as 'POST'
+//                 headers: {'Content-Type': 'application/json', // set the data type as JSON
+//  },
+//                 body: JSON.stringify(newProduct), // need to stringify the JSON object
+//                 })
+//                 .then(response => response.json())
+//                 .then(responseJSON => {
+//                 });
+
+                }          
                
                 },
 
