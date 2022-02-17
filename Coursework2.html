@@ -190,17 +190,13 @@
                 },
                 submitForm(cart) {
                     alert('Order submitted!');
-                    
-                    
+                     
                 var Name=document.getElementById("txtName").value;
                 var Phone=document.getElementById("txtPhone").value;
                 this.order.items.push(cart);
                 var Cart=this.order.items[0];
-                console.log(Name);
-                console.log(Phone);
-                console.log(Cart);
+        
                 const newProduct={name: Name, phoneNumber: Phone,lessons:Cart};
-
 
                 // set the url to your server and route
                 fetch('https://cors-anywhere.herokuapp.com/cst3145coursework.herokuapp.com/collection/order', {
@@ -212,8 +208,29 @@
                 .then(response => response.json())
                 .then(responseJSON => {
                 });
+ 
 
+                console.log("1-"+cart.length);
+                console.log("2-"+this.cart.length);
+
+                // for(i=0;cart.length;i++){}
+
+                // const newInventory={oldInventory-1};
+
+                // set the url to your server and route
+                fetch('https://cors-anywhere.herokuapp.com/cst3145coursework.herokuapp.com/collection/lessons', {
+                method: 'PUT', // set the HTTP method as 'POST'
+                headers: {'Content-Type': 'application/json', // set the data type as JSON
+ },
+                body: JSON.stringify(newProduct), // need to stringify the JSON object
+                })
+                .then(response => response.json())
+                .then(responseJSON => {
+                });
+               
+               
                 },
+
                 canAddToCart(lessons) {
                     return lessons.availableInventory > this.cartCount(lessons);
                 },
