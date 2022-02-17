@@ -194,7 +194,8 @@
                     
                 var Name=document.getElementById("txtName").value;
                 var Phone=document.getElementById("txtPhone").value;
-                var Cart=this.order.items.push(cart);
+                this.order.items.push(cart);
+                var Cart=this.order.items[0];
                 console.log(Name);
                 console.log(Phone);
                 console.log(Cart);
