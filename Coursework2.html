@@ -148,6 +148,8 @@
             created:function(){
             console.log('requesting data from server..')
 
+            //https://cors-anywhere.herokuapp.com/cst3145coursework.herokuapp.com/collection/lessons
+
             fetch('http://localhost:3000/collection/lessons').then(
                 function (res) {
                     res.json().then(
