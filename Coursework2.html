@@ -193,11 +193,11 @@
                     
                 var Name=document.getElementById("txtName").value;
                 var Phone=document.getElementById("txtPhone").value;
-                // var Cart=this.order.items.push();
+                var Cart=this.order.items[0];
                 console.log(Name);
                 console.log(Phone);
                 // console.log(Cart);
-                const newProduct={name: Name, phoneNumber: Phone};
+                const newProduct={name: Name, phoneNumber: Phone,lessons:Cart};
 
 
                 // set the url to your server and route
@@ -209,7 +209,6 @@
                 })
                 .then(response => response.json())
                 .then(responseJSON => {
-                console.log('Success:', responseJSON);
                 });
 
                 },
