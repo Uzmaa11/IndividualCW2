@@ -1,6 +1,7 @@
 <html>
 <head>
     <title>After School Activities</title>
+    <script src="https://unpkg.com/vue"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <meta charset="UTF-8"/>
@@ -187,6 +188,22 @@
                 },
                 submitForm() {
                     alert('Order submitted!')
+                    const newProduct = {name: 'gordon', phoneNumber: 7849};
+
+// set the url to your server and route
+fetch('https://cors-anywhere.herokuapp.com/cst3145coursework.herokuapp.com/collection/order', {
+method: 'POST', // set the HTTP method as 'POST'
+headers: {
+'Content-Type': 'application/json'
+, // set the data type as JSON
+},
+body: JSON.stringify(newProduct), // need to stringify the JSON object
+})
+.then(response => response.json())
+.then(responseJSON => {
+console.log('Success:', responseJSON);
+});
+
                 },
                 canAddToCart(lessons) {
                     return lessons.availableInventory > this.cartCount(lessons);
