@@ -206,7 +206,7 @@
                 .then(responseJSON => {
                 });
 
-                for(i=0;cart.length;i++){
+                for(i=0;i<cart.length;i++){
                 var lessonID=cart[i]._id;
                 var Inventory=cart[i].availableInventory;
                 var newInventory=Inventory-1;  
