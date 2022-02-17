@@ -1,8 +1,8 @@
 <html>
 <head>
     <title>After School Activities</title>
-    <script src="https://unpkg.com/vue"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="lessons.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -22,7 +22,7 @@
               box-shadow: 0 8px 16px 0 rgba(33, 39, 2, 0.2);
             }
             body{
-                background-color:rgb(255, 238, 0)
+                background-color:rgb(255, 196, 0)
             }
             </style>
 </head>
@@ -30,7 +30,7 @@
         
     <div id="app">
         <header style="background-color:rgb(0, 0, 0);font-family:monospace;height:100px">
-            <img style="height:90px;display: flex;"src="static\header1.PNG"><br>
+            <img style="height:90px;display: flex;"src="static/header1.PNG"><br>
             <img style="height:50px;display:flex;margin-left:110px;margin-top:-80px;"src="static/header.PNG">
             <button style="margin-left:980px;margin-top:-50px;visibility: hidden;height:50px;border:4px solid white;border-radius:20px;width:200px;background-color:rgb(163, 156, 154);color:rgb(0, 0, 0);" id="cartbtn" v-on:click='showCheckout'>
                 {{cartItemCount}}
@@ -39,8 +39,6 @@
         </header>
         
         <main>
-
-            </div>
             <div v-if='showlesson'>
                     <div style="margin-left:370px;margin-bottom:10px;margin-top:20px;background-color:rgb(255, 55, 5);border:4px solid black;border-radius:30px;width:500px;" id="sortButtons">
                             <form style="margin-left:130px;margin-bottom:30px;color:rgb(255, 255, 255);width:500px;" >
@@ -63,8 +61,8 @@
                     
                                 </form>
                                 </div>
-                <div id="webstore" class="card" v-for="lessons in Sort">
-                   <h2 style="margin-left: 30px;font-family: Brush script MT;font-size:30px;color:rgb(0, 0, 0);" v-text="lessons.topic"></h2>
+                <div class="card" v-for="lessons in Sort">
+                   <h2 style="margin-left: 30px;font-family: Brush script MT;font-size:30px;color:rgb(0, 0, 0);" v-text="lessons.subject"></h2>
                     <figure>
                         <img  style="width: 300px;height:300px;margin-left:-20px;" v-bind:src="lessons.image">
                     </figure>
@@ -87,9 +85,9 @@
             <div v-else>
                 <div>
                 <h2 style="margin-left: 30px;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;font-size:30px;color:rgb(0, 0, 0);">Your Cart</h2>
-                <div id="webstore" class="card" v-for="lessons in cart">
+                <div class="card" v-for="lessons in cart">
                        
-                 <h2 style="margin-left: 30px;font-family: Brush script MT;font-size:30px;color:rgb(0, 0, 0);" v-text="lessons.topic"></h2>
+                 <h2 style="margin-left: 30px;font-family: Brush script MT;font-size:30px;color:rgb(0, 0, 0);" v-text="lessons.subject"></h2>
                  <figure>
                      <img  style="width: 300px;height:300px;margin-left:-20px;" v-bind:src="lessons.image">
                  </figure>
@@ -102,10 +100,10 @@
                 <h2 style="margin-left:530px;font-family:Brush script MT;font-size:40px;color:rgb(145, 144, 144);">Checkout</h2>
                         <form name="theform" style="margin-left:30px;color:white;">
                                 <label >Name:</label>
-                                <input style="width:480px" name="first_name" type="text" id="txtName" onkeypress="return Validate(event);" />
+                                <input style="width:480px" type="text" id="txtName" onkeypress="return Validate(event);" />
                                 <span id="lblError"></span>
                                 <label style="margin-left:30px;">  Phone No:</label>
-                                <input style="width:480px" name="last_name" v-model="order.Phone" type="number" type="text" onKeyup="checkform()" /><br><br>
+                                <input style="width:480px" v-model="order.Phone" type="number" type="text" onKeyup="checkform()" /><br><br>
                                
                                 <input style="visibility:hidden;margin-left:450px;margin-bottom:20px;height:40px;width:250px;background-color:rgb(8, 8, 8);color:rgb(255, 196, 0);border:4px solid rgb(255, 196, 0);border-radius:30px;" id="submitbutton" type="submit" value="Submit" v-on:click=submitForm() />
                                 </form> 
@@ -115,7 +113,7 @@
                
                 <div   v-if='showlesson'>
                     <div v-for="lessons in Sort">
-                        <h2 id="lessonSubject" v-text="lessons.topic"></h2>
+                        <h2 id="lessonSubject" v-text="lessons.subject"></h2>
                         <figure>
                             <img v-bind:src="lessons.image">
                         </figure>
@@ -132,7 +130,7 @@
             el: '#app',
             data: {
                 sitename: 'AFTER SCHOOL ACTIVITIES',
-                lessons:[],
+                lessons: lessons,
                 cart: [],
                 sortItem:{
                     sortCategory:'Subject',
@@ -144,13 +142,17 @@
                     Phone: '',
                
                 },
+               
+                
             },
+         
             created:function(){
             console.log('requesting data from server..')
 
             //https://cors-anywhere.herokuapp.com/cst3145coursework.herokuapp.com/collection/lessons
+            //http://localhost:3000/collection/lessons
 
-            fetch('http://localhost:3000/collection/lessons').then(
+            fetch('https://cors-anywhere.herokuapp.com/cst3145coursework.herokuapp.com/collection/lessons').then(
                 function (res) {
                     res.json().then(
                         function (json) {       
@@ -171,6 +173,8 @@
                           this.cart.splice(i,1);
                       }
                   }
+                   
+                    
                 },
 
                 showCheckout() {
@@ -184,21 +188,6 @@
                 },
                 submitForm() {
                     alert('Order submitted!')
-                 
-                 const newProduct = {name: 'uzma', phoneNumber: 7849};
-
-                // set the url to your server and route
-                fetch('https://cst3145coursework.herokuapp.com/collection/order', {
-                 method: 'POST', // set the HTTP method as 'POST'
-                 headers: {'Content-Type': 'application/json', // set the data type as JSON
-                   },
-                body: JSON.stringify(newProduct), // need to stringify the JSON object
-                })
-                .then(response => response.json())
-                .then(responseJSON => {
-                 console.log('Success:', responseJSON);
-                });
-
                 },
                 canAddToCart(lessons) {
                     return lessons.availableInventory > this.cartCount(lessons);
@@ -229,9 +218,9 @@
                 if ((sortC=="Subject")&&(sortO=="Descending")){
                     
                     function compare(a, b) {
-                        if (a.topic > b.topic)
+                        if (a.subject > b.subject)
                             return -1;
-                        if (a.topic < b.topic)
+                        if (a.subject < b.subject)
                             return 1;
                         return 0;
                     }
@@ -279,9 +268,9 @@
                 }
                 else if ((sortC=="Subject")&&(sortO=="Ascending")){
                     function compare(a, b) {
-                        if (a.topic > b.topic)
+                        if (a.subject > b.subject)
                             return 1;
-                        if (a.topic < b.topic)
+                        if (a.subject < b.subject)
                             return -1;
                         return 0;
                     }
@@ -291,33 +280,7 @@
             },
         }
     });
-    function checkform()
-{
-    var f = document.forms["theform"].elements;
-    var cansubmit = true;
-
-    for (var i = 0; i < f.length; i++) {
-        if (f[i].value.length == 0) cansubmit = false;
-    }
-
-    if (cansubmit) {
-        document.getElementById('submitbutton').style.visibility = 'visible';
-    }
-}
-function Validate(e) {
-  var keyCode = e.keyCode || e.which;
-
-  var lblError = document.getElementById("lblError");
-  lblError.innerHTML = "";
-
-  var regex = /^[A-Za-z]+$/;
-  var isValid = regex.test(String.fromCharCode(keyCode));
-  if (!isValid) {
-      lblError.innerHTML = "";
-  }
-  return isValid;
-
-}
-</script>
+    </script>
 </body>
+
 </html>
