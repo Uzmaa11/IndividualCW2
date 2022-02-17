@@ -104,8 +104,7 @@
                                 <span id="lblError"></span>
                                 <label style="margin-left:30px;">  Phone No:</label>
                                 <input style="width:480px" v-model="order.Phone" type="number" type="text" onKeyup="checkform()" /><br><br>
-                               
-                                <!-- <input style="visibility:hidden;margin-left:450px;margin-bottom:20px;height:40px;width:250px;background-color:rgb(8, 8, 8);color:rgb(255, 196, 0);border:4px solid rgb(255, 196, 0);border-radius:30px;" id="submitbutton" type="submit" value="Submit" v-on:click=submitForm() /> -->
+                        
                                 <button style="visibility:hidden;margin-left:450px;margin-bottom:20px;height:40px;width:250px;background-color:rgb(8, 8, 8);color:rgb(255, 196, 0);border:4px solid rgb(255, 196, 0);border-radius:30px;" id="submitbutton" v-on:click='submitForm()' >Submit</button>
                             </form> 
                </div>
@@ -190,7 +189,7 @@
                 },
                 submitForm() {
                     alert('Order submitted!')
-                    const newProduct = {name: 'max', phoneNumber: 7849};
+                    // const newProduct = {name: 'max', phoneNumber: 7849};
 
                 // set the url to your server and route
                 fetch('https://cors-anywhere.herokuapp.com/cst3145coursework.herokuapp.com/collection/order', {
