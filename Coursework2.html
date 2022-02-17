@@ -126,6 +126,34 @@
     
     <script type="text/javascript">
 
+         function checkform()
+{
+    var f = document.forms["theform"].elements;
+    var cansubmit = true;
+
+    for (var i = 0; i < f.length; i++) {
+        if (f[i].value.length == 0) cansubmit = false;
+    }
+
+    if (cansubmit) {
+        document.getElementById('submitbutton').style.visibility = 'visible';
+    }
+}
+function Validate(e) {
+  var keyCode = e.keyCode || e.which;
+
+  var lblError = document.getElementById("lblError");
+  lblError.innerHTML = "";
+
+  var regex = /^[A-Za-z]+$/;
+  var isValid = regex.test(String.fromCharCode(keyCode));
+  if (!isValid) {
+      lblError.innerHTML = "";
+  }
+  return isValid;
+
+}
+
         var webstore = new Vue({
             el: '#app',
             data: {
@@ -188,7 +216,7 @@
                 },
                 submitForm() {
                     alert('Order submitted!')
-                    const newProduct = {name: 'max', phoneNumber: 7849};
+                    // const newProduct = {name: 'max', phoneNumber: 7849};
 
 // set the url to your server and route
 fetch('https://cors-anywhere.herokuapp.com/cst3145coursework.herokuapp.com/collection/order', {
@@ -294,6 +322,8 @@ console.log('Success:', responseJSON);
                 }              
                                
             },
+
+            
         }
     });
     </script>
