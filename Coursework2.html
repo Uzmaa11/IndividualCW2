@@ -2,7 +2,6 @@
 <head>
     <title>After School Activities</title>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="lessons.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -61,8 +60,8 @@
                     
                                 </form>
                                 </div>
-                <div class="card" v-for="lessons in Sort">
-                   <h2 style="margin-left: 30px;font-family: Brush script MT;font-size:30px;color:rgb(0, 0, 0);" v-text="lessons.subject"></h2>
+                <div id="webstore" class="card" v-for="lessons in Sort">
+                   <h2 style="margin-left: 30px;font-family: Brush script MT;font-size:30px;color:rgb(0, 0, 0);" v-text="lessons.topic"></h2>
                     <figure>
                         <img  style="width: 300px;height:300px;margin-left:-20px;" v-bind:src="lessons.image">
                     </figure>
@@ -85,9 +84,9 @@
             <div v-else>
                 <div>
                 <h2 style="margin-left: 30px;font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;font-size:30px;color:rgb(0, 0, 0);">Your Cart</h2>
-                <div class="card" v-for="lessons in cart">
+                <div id="webstore" class="card" v-for="lessons in cart">
                        
-                 <h2 style="margin-left: 30px;font-family: Brush script MT;font-size:30px;color:rgb(0, 0, 0);" v-text="lessons.subject"></h2>
+                 <h2 style="margin-left: 30px;font-family: Brush script MT;font-size:30px;color:rgb(0, 0, 0);" v-text="lessons.topic"></h2>
                  <figure>
                      <img  style="width: 300px;height:300px;margin-left:-20px;" v-bind:src="lessons.image">
                  </figure>
@@ -113,7 +112,7 @@
                
                 <div   v-if='showlesson'>
                     <div v-for="lessons in Sort">
-                        <h2 id="lessonSubject" v-text="lessons.subject"></h2>
+                        <h2 id="lessonSubject" v-text="lessons.topic"></h2>
                         <figure>
                             <img v-bind:src="lessons.image">
                         </figure>
@@ -130,7 +129,7 @@
             el: '#app',
             data: {
                 sitename: 'AFTER SCHOOL ACTIVITIES',
-                lessons: lessons,
+                lessons: [],
                 cart: [],
                 sortItem:{
                     sortCategory:'Subject',
@@ -218,9 +217,9 @@
                 if ((sortC=="Subject")&&(sortO=="Descending")){
                     
                     function compare(a, b) {
-                        if (a.subject > b.subject)
+                        if (a.topic > b.topic)
                             return -1;
-                        if (a.subject < b.subject)
+                        if (a.topic < b.topic)
                             return 1;
                         return 0;
                     }
@@ -268,9 +267,9 @@
                 }
                 else if ((sortC=="Subject")&&(sortO=="Ascending")){
                     function compare(a, b) {
-                        if (a.subject > b.subject)
+                        if (a.topic > b.topic)
                             return 1;
-                        if (a.subject < b.subject)
+                        if (a.topic < b.topic)
                             return -1;
                         return 0;
                     }
